@@ -10,3 +10,4 @@ My job(s):
           -mid-menu creates a temporary int variable, and uses a switch statement
               to determine what the user wants to do (i.e. exit program, new puzzle,
               new game type, get hint, etc...)
+2.1)      Tarin is on switch-integer menu, I write string-reader/parser function.
