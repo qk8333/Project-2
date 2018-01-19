@@ -3,14 +3,14 @@
 #include<string>
 #include<cstring>
 #include<iomanip>
-#include"puzzle.h"
-#include"game.h"
+#include"menu.h"
 using namespace std;
 
-int main()
-{
-	while(isPlaying){
-  
-  }
-  return 0;
+int main(){
+	
+	//menu menu = new menu.menuSys();
+	//while(menu.isPlaying()){
+	
+ 	//}
+	return 0;
 }
