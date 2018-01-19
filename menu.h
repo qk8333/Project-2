@@ -18,6 +18,7 @@ public:
 	void userMenu();	//the user invokes this if they want to open a help menu, or exit the program during a puzzle
 	bool isWin(); //checks if the game is won
 	bool isPlaying(); //checks if the user still wants to play
+	void readString(string a);	//reads a string and acts accordingly
 private:
 	string puzzle;	//stores puzzle name
 	int game;	//stores game choice
@@ -55,6 +56,10 @@ void menuSys::selectPuzzle()
 	cout << "Now, please select a puzzle name: ";
 	cin >> puzzle;
 	cout << endl << "thanks! you will open " << puzzle << "!" << endl;
+	
+};
+void menuSys::readString(string a)
+{
 	
 };
 void menuSys::makeMove()
