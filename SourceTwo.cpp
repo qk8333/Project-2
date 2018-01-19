@@ -13,7 +13,7 @@ int main(){
 	menu.menuSys();			//call the constructor
 	while(menu.isPlaying()){	//so long as the user wants to play our game we stay here
 		//now we are at level one, asking the user what they would like to do to start
-		//besides exit, their option is to selevt a game
+		//besides exit, their option is to select a game
 		
 		//now we are at level two
 		//besides exit, their option is to select a puzzle file
