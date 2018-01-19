@@ -29,7 +29,8 @@ private:
 void menuSys::selectGame()
 {
 	int a;
-	cout << "Please pick a number between 1 and 2:" << endl << "1=picross   2=rullo" << endl << "Or type 9 to exit." << endl;
+	cout << "Please pick a number between 1 and 2:" << endl << "1=picross   2=rullo" << endl << "Or type CTRL+C to exit." << endl;
+	//previously "type 9 to exit
 	cin >> a;
 	cout << endl;
 	switch (a)
@@ -40,10 +41,10 @@ void menuSys::selectGame()
 	case '2':
 		cout << "Neat! Rullo Rules!" << endl;
 		break;
-	case '9':
-		cout << "Sorry to see you go, but have a nice day." << endl;
-		isPlaying = FALSE;
-		break;
+	//case '9':
+	//	cout << "Sorry to see you go, but have a nice day." << endl;
+	//	isPlaying = FALSE;
+	//	break;
 	default://change this to either recurse or exit
 		cout << "You miscreant! It's Nonograms for you!" << endl;
 		a = 1;
