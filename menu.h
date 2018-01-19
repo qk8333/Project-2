@@ -60,7 +60,8 @@ void menuSys::selectPuzzle()
 };
 void menuSys::readString(string a)
 {
-	
+	string buf = a;
+	// buf.c_str()
 };
 void menuSys::makeMove()
 {
