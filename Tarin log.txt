@@ -1,0 +1,5 @@
+Tarin here
+
+Friday the 19th
+11:00 am
+the team is all up here working on stuff. I'm working on both the structure of our main function, and helping create menu.h. So far I've storyboarded the main function so we can keep our structure straight
