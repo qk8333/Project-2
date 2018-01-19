@@ -21,7 +21,7 @@ private:
 	string puzzle;	//stores puzzle name
 	int game;	//stores game choice
 	int choice;	//used to store User choices for switch statements
-	bool isPlaying = TRUE;	//used to track if the user is still wanting to play
+	bool isPlaying;	//used to track if the user is still wanting to play
 };
 
 void menuSys::selectGame()
@@ -70,8 +70,9 @@ bool menuSys::isPlaying()
 };
 menuSys::menuSys()
 {
-	
-	
+menuSys.selectGame();
+menuSys.selectPuzzle();
+menuSys.isPlaying=TRUE;
 };
 menuSys::~menuSys()
 {
