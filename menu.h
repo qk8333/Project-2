@@ -80,6 +80,12 @@ void menuSys::userMenu()
 	switch(userMenuType){
 		case '1' :
 			//print instructions for the current game type
+			if (game = 1){
+				cout << "These are Picross rules!" << endl;
+			}
+			else if (game = 2){
+				cout << "These are Rullo rules!" << endl;
+			}
 			break;
 		case '5' : 
 			break;
