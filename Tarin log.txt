@@ -3,3 +3,7 @@ Tarin here
 Friday the 19th
 11:00 am
 the team is all up here working on stuff. I'm working on both the structure of our main function, and helping create menu.h. So far I've storyboarded the main function so we can keep our structure straight
+
+12 noon
+The team is wrapping up for the day, I've tweaked some more stuff in menu, created the userMenu as I call it
+I want to make an exit function that can be called at any time rather than just relying on making the user use interrupts. Evan has suggested I use polling, put the entire main function into a loop
