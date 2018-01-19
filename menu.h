@@ -16,6 +16,7 @@ public:
 	void selectPuzzle();	//selects a specific puzzle
 	void makeMove();	//makes a move
 	bool isWin(); //checks if the game is won
+	bool isPlaying(); //checks if the user still wants to play
 private:
 	string puzzle;	//stores puzzle name
 	int game;	//stores game choice
@@ -63,7 +64,10 @@ bool menuSys::isWin()
 {
 
 };
-
+bool menuSys::isPlaying()
+{
+	
+};
 menuSys::menuSys()
 {
 	
