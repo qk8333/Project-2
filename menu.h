@@ -17,6 +17,7 @@ public:
 	void makeMove();	//makes a move
 	bool isWin(); //checks if the game is won
 	bool isPlaying(); //checks if the user still wants to play
+	void readString(string a);	//reads a string from command line, and acts accordingly.
 private:
 	string puzzle;	//stores puzzle name
 	int game;	//stores game choice
@@ -54,6 +55,9 @@ void menuSys::selectPuzzle()
 	cout << "Now, please select a puzzle name: ";
 	cin >> puzzle;
 	cout << endl << "thanks! you will open " << puzzle << "!" << endl;
+};
+void menuSys::readString(string a)
+{
 	
 };
 void menuSys::makeMove()
