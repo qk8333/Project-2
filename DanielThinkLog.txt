@@ -1,0 +1,12 @@
+My job(s):
+
+1) Work on menu with Tarin
+
+2) write string-reading function for when the user makes a move.
+-> IDEAS:
+          -put in menu.h, function takes a string and reads it
+          -if the sting is a standard move, pass the integers to the game object
+          -if the string is "help" or "menu", run another function, "mid-menu"
+          -mid-menu creates a temporary int variable, and uses a switch statement
+              to determine what the user wants to do (i.e. exit program, new puzzle,
+              new game type, get hint, etc...)
