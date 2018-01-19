@@ -20,6 +20,7 @@ public:
 	bool isPlaying(); //checks if the user still wants to play
 private:
 	string puzzle;	//stores puzzle name
+	int userMenuType; 	//stores whatever the user types in userMenu
 	int game;	//stores game choice
 	int choice;	//used to store User choices for switch statements
 	bool isPlaying;	//used to track if the user is still wanting to play
@@ -72,6 +73,23 @@ bool menuSys::isPlaying()
 void menuSys::userMenu()
 {
 	cout << "Hello there. What would you like help with?" << endl;
+	cout << "If you would like instructions, type 1. If you would like to exit our game, type 9. Otherwise, type 5 to return to your game." << endl;
+	cin >> userMenuType;
+	
+	switch(userMenuType){
+		case '1' :
+			//print instructions for the current game type
+			break;
+		case '5' : 
+			break;
+		case '9' : 
+			cout << "Sorry to see you go, but have a nice day." << endl;
+			isPlaying = FALSE;
+			//find some way to force exit the program. a new function?
+			break;
+		default :
+			break; //yes, this is the same as case 5
+	}
 };
 menuSys::menuSys()
 {
