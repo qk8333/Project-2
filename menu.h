@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 using namespace std;
 
 class menuSys	//menu class for user traversal
@@ -18,6 +19,7 @@ public:
 	void userMenu();	//the user invokes this if they want to open a help menu, or exit the program during a puzzle
 	bool isWin(); //checks if the game is won
 	bool isPlaying(); //checks if the user still wants to play
+	void readString(string a);	//reads a string and acts accordingly
 private:
 	string puzzle;	//stores puzzle name
 	int userMenuType; 	//stores whatever the user types in userMenu
@@ -58,6 +60,11 @@ void menuSys::selectPuzzle()
 	cin >> puzzle;
 	cout << endl << "thanks! you will open " << puzzle << "!" << endl;
 	
+};
+void menuSys::readString(string a)
+{
+	string buf = a;
+	// buf.c_str()
 };
 void menuSys::makeMove()
 {
