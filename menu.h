@@ -16,16 +16,31 @@ public:
 	void selectGame();	//sets which game is being played
 	void selectPuzzle();	//selects a specific puzzle
 	void makeMove();	//makes a move
+	void readString(string a);	//reads a string and acts accordingly
 	void userMenu();	//the user invokes this if they want to open a help menu, or exit the program during a puzzle
 	bool isWin(); //checks if the game is won
 	bool isPlaying(); //checks if the user still wants to play
-	void readString(string a);	//reads a string and acts accordingly
+	int getRow();	//passes row for Evan's class functions
+	int getColums();	//passes column for Evan's class functions
 private:
 	string puzzle;	//stores puzzle name
 	int userMenuType; 	//stores whatever the user types in userMenu
 	int game;	//stores game choice
 	int choice;	//used to store User choices for switch statements
+	int passRow;	//used to pass the row to Evan's classes
+	int passColumn;	//used to pass the column to Evan's classes
 	bool isPlaying;	//used to track if the user is still wanting to play
+};
+
+menuSys::menuSys()
+{
+menuSys.selectGame();
+menuSys.selectPuzzle();
+menuSys.isPlaying=TRUE;
+};
+menuSys::~menuSys()
+{
+
 };
 
 void menuSys::selectGame()
@@ -63,20 +78,13 @@ void menuSys::selectPuzzle()
 };
 void menuSys::readString(string a)
 {
+	
 	string buf = a;
-	// buf.c_str()
+	
 };
 void menuSys::makeMove()
 {
 
-};
-bool menuSys::isWin()
-{
-
-};
-bool menuSys::isPlaying()
-{
-	
 };
 void menuSys::userMenu()
 {
@@ -106,15 +114,23 @@ void menuSys::userMenu()
 			break; //yes, this is the same as case 5
 	}
 };
-menuSys::menuSys()
-{
-menuSys.selectGame();
-menuSys.selectPuzzle();
-menuSys.isPlaying=TRUE;
-};
-menuSys::~menuSys()
+
+bool menuSys::isWin()
 {
 
+};
+bool menuSys::isPlaying()
+{
+	
+};
+
+int menuSys::getRow()
+{
+	return passRow;	
+};
+int menuSys::getColumn()
+{
+	return passColumn;	
 };
 
 #endif
