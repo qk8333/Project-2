@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <cctype>
 using namespace std;
 
 class menuSys	//menu class for user traversal
@@ -17,6 +18,8 @@ public:
 	void makeMove();	//makes a move
 	void userMenu();	//the user invokes this if they want to open a help menu, or exit the program during a puzzle
 	void readString(string a);	//reads a string and acts accordingly
+	void setRow(int a);	//sets the passRow variable
+	void setColumn(int a);	//sets the passColumn variable
 	bool isPlaying(); //checks if the user still wants to play
 	bool isWin(); //checks if the game is won
 	int getRow();	//passes row for Evan's class functions
@@ -78,7 +81,30 @@ void menuSys::selectPuzzle()
 void menuSys::readString(string a)
 {
 	int i=0;
-	string buf = a;	
+	int j=0;
+	string buf = a;
+	if(isdigit(buf[0].c_str()))
+		i=1;
+	elseif(isalpha(buf[0].c_str()))
+		i=2;
+	switch(i)
+	{
+	case 1:
+		//pass integers to row and column
+		for (int x=0; x<strlen(buf.c_str()); x++)
+		if(buf[x]==' ')
+		{
+			setRow(atoi((buf.substr(0,x)).c_str()));
+			setColumn(atoi((buf.substr(x+1,strlen(buf.c_str())).c_str()))
+		};
+		break;
+	case 2:
+		//check for menu, help, or exit
+		break;
+	default:
+
+
+	}
 };
 void menuSys::makeMove()
 {
@@ -111,6 +137,14 @@ void menuSys::userMenu()
 		default :
 			break; //yes, this is the same as case 5
 	}
+};
+void menuSys::setRow(int a)
+{
+	passRow=a;
+};
+void menuSys::setColumn(int a)
+{
+	passColumn=a;
 };
 
 bool menuSys::isWin()
