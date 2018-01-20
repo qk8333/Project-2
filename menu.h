@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 using namespace std;
 
 class menuSys	//menu class for user traversal
