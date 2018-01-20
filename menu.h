@@ -9,27 +9,26 @@ using namespace std;
 
 class menuSys	//menu class for user traversal
 {
-
 public:
 	menuSys();	//standard constructor
 	~menuSys();	//standard destructor
 	void selectGame();	//sets which game is being played
 	void selectPuzzle();	//selects a specific puzzle
 	void makeMove();	//makes a move
-	void readString(string a);	//reads a string and acts accordingly
 	void userMenu();	//the user invokes this if they want to open a help menu, or exit the program during a puzzle
-	bool isWin(); //checks if the game is won
+	void readString(string a);	//reads a string and acts accordingly
 	bool isPlaying(); //checks if the user still wants to play
+	bool isWin(); //checks if the game is won
 	int getRow();	//passes row for Evan's class functions
 	int getColums();	//passes column for Evan's class functions
 private:
-	string puzzle;	//stores puzzle name
+	bool isPlaying;	//used to track if the user is still wanting to play
 	int userMenuType; 	//stores whatever the user types in userMenu
 	int game;	//stores game choice
 	int choice;	//used to store User choices for switch statements
 	int passRow;	//used to pass the row to Evan's classes
 	int passColumn;	//used to pass the column to Evan's classes
-	bool isPlaying;	//used to track if the user is still wanting to play
+	string puzzle;	//stores puzzle name
 };
 
 menuSys::menuSys()
@@ -73,14 +72,12 @@ void menuSys::selectPuzzle()
 {
 	cout << "Now, please select a puzzle name: ";
 	cin >> puzzle;
-	cout << endl << "thanks! you will open " << puzzle << "!" << endl;
-	
+	cout << endl << "thanks! you will open " << puzzle << "!" << endl;	
 };
 void menuSys::readString(string a)
 {
-	
-	string buf = a;
-	
+	int i=0;
+	string buf = a;	
 };
 void menuSys::makeMove()
 {
