@@ -22,7 +22,8 @@ public:
 	int getRow();	//passes row for Evan's class functions
 	int getColums();	//passes column for Evan's class functions
 private:
-	bool isPlaying;	//used to track if the user is still wanting to play
+	//bool isPlaying;	//used to track if the user is still wanting to play
+	bool playing;	//used to track if the user is still wanting to play. renamed.
 	int userMenuType; 	//stores whatever the user types in userMenu
 	int game;	//stores game choice
 	int choice;	//used to store User choices for switch statements
@@ -59,7 +60,7 @@ void menuSys::selectGame()
 		break;
 	case '9':
 		cout << "Sorry to see you go, but have a nice day." << endl;
-		isPlaying = FALSE;
+		playing = FALSE;
 		break;
 	default://change this to either recurse or exit
 		cout << "You miscreant! It's Nonograms for you!" << endl;
@@ -103,7 +104,7 @@ void menuSys::userMenu()
 			break;
 		case '9' : 
 			cout << "Sorry to see you go, but have a nice day." << endl;
-			isPlaying = FALSE;
+			playing = FALSE;
 			//find some way to force exit the program. a new function?
 			std::exit;
 			break;
