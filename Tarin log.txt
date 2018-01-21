@@ -7,3 +7,7 @@ the team is all up here working on stuff. I'm working on both the structure of o
 12 noon
 The team is wrapping up for the day, I've tweaked some more stuff in menu, created the userMenu as I call it
 I want to make an exit function that can be called at any time rather than just relying on making the user use interrupts. Evan has suggested I use polling, put the entire main function into a loop
+
+Sunday
+7 PM
+I had nothing better to do, so I looked up the rules of Rullo and put them in out userMenu in case the user needs instructions like I did
