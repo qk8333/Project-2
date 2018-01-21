@@ -91,7 +91,12 @@ void menuSys::userMenu()
 				cout << "These are Picross rules!" << endl;
 			}
 			else if (game = 2){
-				cout << "These are Rullo rules!" << endl;
+				cout << "These are the rules of Rullo!" << endl;
+				cout << "In this game you have a board full of numbers, and your goal is to make the sum of every row and column equal to the number in the box next to it." << endl;
+				cout << "At the start of each game all of the numbers will be 'on', and you get to turn numbers on and off until the game is won." << endl;
+				cout << "To choose a square, tyle the X/Y co-ordinates (not the number in the grid." << endl;
+				
+				//this is assuming console input
 			}
 			break;
 		case '5' : 
