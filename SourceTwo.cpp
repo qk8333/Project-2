@@ -9,8 +9,10 @@ using namespace std;
 
 int main(){
 	
-	menu menu;			//declare out menu
-	menu.menuSys();			//call the constructor
+	Menu* menu = new Menu();			//This should already call out the constructor
+	/*
+	menu.menuSys();			//constructor should already be called in declaration
+	*/
 	while(menu.isPlaying()){	//so long as the user wants to play our game we stay here
 		//now we are at level one, asking the user what they would like to do to start
 		//besides exit, their option is to select a game
