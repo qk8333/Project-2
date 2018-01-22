@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "menu.h"
+#include "Menu.h"
 using namespace std;
 
 void introduction(menuSys a)
