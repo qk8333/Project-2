@@ -3,8 +3,8 @@
 #include<string>
 #include<cstring>
 #include<iomanip>
-#include"menu.h"
-#include"nonogram.h"
+#include"Menu.h"
+#include"Picross.h"
 using namespace std;
 
 int main(){
