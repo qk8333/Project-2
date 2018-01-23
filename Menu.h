@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <cctype>
 using namespace std;
 
 class Menu	//menu class for user traversal
@@ -17,17 +18,32 @@ public:
 	void selectPuzzle();	//selects a specific puzzle
 	void makeMove();	//makes a move
 	void userMenu();	//the user invokes this if they want to open a help menu, or exit the program during a puzzle
+	void readString(string a);	//reads a string and acts accordingly
+	void setRow(int a);	//sets the passRow variable
+	void setColumn(int a);	//sets the passColumn variable
 	bool isWin(); //checks if the game is won
 	bool isPlaying(); //checks if the user still wants to play
-	/*
-	void readString(string);	//reads a string and acts accordingly
-	*/
+	int getRow();	//passes row for Evan's class functions
+	int getColumn();	//passes column for Evan's class functions
 private:
-	string puzzle;	//stores puzzle name
+	bool playing;	//used to track if the user is still wanting to play
 	int userMenuType; 	//stores whatever the user types in userMenu
 	int game;	//stores game choice
 	int choice;	//used to store User choices for switch statements
-	bool isPlaying;	//used to track if the user is still wanting to play
+	int passRow;	//used to pass the row to Evan's classes
+	int passColumn;	//used to pass the column to Evan's classes
+	string puzzle;	//stores puzzle name
+};
+
+Menu::Menu()
+{
+this.selectGame();
+this.selectPuzzle();
+this.playing=TRUE;
+};
+Menu::~Menu()
+{
+
 };
 
 void Menu::selectGame()
@@ -47,7 +63,7 @@ void Menu::selectGame()
 		break;
 	case '9':
 		cout << "Sorry to see you go, but have a nice day." << endl;
-		isPlaying = FALSE;
+		playing = FALSE;
 		break;
 	default://change this to either recurse or exit
 		cout << "You miscreant! It's Nonograms for you!" << endl;
@@ -63,25 +79,36 @@ void Menu::selectPuzzle()
 	cout << endl << "thanks! you will open " << puzzle << "!" << endl;
 	
 };
-/*
-void Menu::readString(string str) 
+void Menu::readString(string a)
 {
-	string buf = str;
-	// buf.c_str()
+	int i=0;
+	int j=0;
+	string buf = a;
+	if(isdigit(buf[0].c_str()))
+		i=1;
+	elseif(isalpha(buf[0].c_str()))
+		i=2;
+	switch(i)
+	{
+	case 1:
+		//pass integers to row and column
+		for (int x=0; x<strlen(buf.c_str()); x++)
+		if(buf[x]==' ')
+		{
+			setRow(atoi((buf.substr(0,x)).c_str()));
+			setColumn(atoi((buf.substr(x+1,strlen(buf.c_str())).c_str()))
+		};
+		break;
+	case 2:
+		//check for menu, help, or exit
+		break;
+	default:
+		//recurse into this function after asking for a re-entry of user choice
+	}
 };
-*/
-
 void Menu::makeMove()
 {
 
-};
-bool Menu::isWin()
-{
-
-};
-bool Menu::isPlaying()
-{
-	
 };
 void Menu::userMenu()
 {
@@ -92,10 +119,12 @@ void Menu::userMenu()
 	switch(userMenuType){
 		case '1' :
 			//print instructions for the current game type
-			if (game = 1){
+			if (game = 1)
+			{
 				cout << "These are Picross rules!" << endl;
 			}
-			else if (game = 2){
+			else if (game = 2)
+			{
 				cout << "These are the rules of Rullo!" << endl;
 				cout << "In this game you have a board full of numbers, and your goal is to make the sum of every row and column equal to the number in the box next to it." << endl;
 				cout << "At the start of each game all of the numbers will be 'on', and you get to turn numbers on and off until the game is won." << endl;
@@ -108,7 +137,7 @@ void Menu::userMenu()
 			break;
 		case '9' : 
 			cout << "Sorry to see you go, but have a nice day." << endl;
-			isPlaying = FALSE;
+			playing = FALSE;
 			//find some way to force exit the program. a new function?
 			std::exit;
 			break;
@@ -116,15 +145,31 @@ void Menu::userMenu()
 			break; //yes, this is the same as case 5
 	}
 };
-Menu::Menu()
+void Menu::setRow(int a)
 {
-this.selectGame();
-this.selectPuzzle();
-this.isPlaying=TRUE;
+	passRow=a;
 };
-Menu::~Menu()
+void Menu::setColumn(int a)
+{
+	passColumn=a;
+};
+
+bool Menu::isWin()
 {
 
+};
+bool Menu::isPlaying()
+{
+	
+};
+
+int Menu::getRow()
+{
+	return passRow;	
+};
+int Menu::getColumn()
+{
+	return passColumn;	
 };
 
 #endif
