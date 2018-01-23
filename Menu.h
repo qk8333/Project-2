@@ -40,9 +40,9 @@ private:
 
 Menu::Menu()
 {
-this.selectGame();
-this.selectPuzzle();
-this.playing=TRUE;
+this->selectGame();
+this->selectPuzzle();
+this->playing=true;
 };
 Menu::~Menu()
 {
@@ -66,7 +66,7 @@ void Menu::selectGame()
 		break;
 	case '9':
 		cout << "Sorry to see you go, but have a nice day." << endl;
-		playing = FALSE;
+		playing = false;
 		break;
 	default://change this to either recurse or exit
 		cout << "You miscreant! It's Nonograms for you!" << endl;
@@ -120,7 +120,7 @@ void Menu::readString(string a)
 		}
 		else if(a == "exit")
 		{
-			playing=FALSE;
+			playing=false;
 		}
 		break;
 	default:
@@ -158,7 +158,7 @@ void Menu::userMenu()
 			break;
 		case '9' : 
 			cout << "Sorry to see you go, but have a nice day." << endl;
-			playing = FALSE;
+			playing = false;
 			//find some way to force exit the program. a new function?
 			std::exit;
 			break;
