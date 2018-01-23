@@ -1,0 +1,8 @@
+Welcome! Today we will be playing with nonograms, a grid-based picture uncovering game. The rules are simple to understand, but difficult to master.
+When starting a nonogram, you will be given an empty grid. Along the top and side of the grid are a list of clues. Each space on the grid can be filled in, or erased again if need be. Your goal is to take the clues and use them to uncover a picture by filling in the grid just right.
+The clues in a grid take a very specific form, a list of numbers. Each number in a clue is the number of conscutive spaces to be filled in within that row or column. Two numbers represent two groups of filled-in spaces that are seperated by at least one empty space. et's look at an example:
+------------------------------------------
+4 5 2| |x|x|x|x| | |x|x|x|x|x| | | | |x|x|
+------------------------------------------
+As you can see in our example, there are three groups of filled-in squares. One is four squares, followed by at least one (in this case two) empty spaces before we get to the next group, a group of five consecutive filled-in squares.
+Once you have filled in the spaces in the grid such that every clue is correctly satisfied, and the picture has been revealed, congratulations, you have won!
