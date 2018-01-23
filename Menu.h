@@ -28,6 +28,7 @@ public:
 	int getRow();	//passes row for Evan's class functions
 	int getColumn();	//passes column for Evan's class functions
 private:
+	fstream instructions;	//for opening instructions
 	bool playing;	//used to track if the user is still wanting to play
 	int userMenuType; 	//stores whatever the user types in userMenu
 	int game;	//stores game choice
@@ -85,24 +86,42 @@ void Menu::readString(string a)
 {
 	int i=0;
 	int j=0;
-	string buf = a;
-	if(isdigit(buf[0].c_str()))
+	if(isdigit(a.c_str()[0]))
 		i=1;
-	elseif(isalpha(buf[0].c_str()))
+	else if(isalpha(a.c_str()[0]))
 		i=2;
 	switch(i)
 	{
 	case 1:
 		//pass integers to row and column
-		for (int x=0; x<strlen(buf.c_str()); x++)
-		if(buf[x]==' ')
+		for (int x=0; x<strlen(a.c_str()); x++)
+		if(a[x]==' ')
 		{
-			setRow(atoi((buf.substr(0,x)).c_str()));
-			setColumn(atoi((buf.substr(x+1,strlen(buf.c_str())).c_str()))
-		};
+			setRow(atoi((a.substr(0,x)).c_str()));
+			setColumn(atoi((a.substr(x+1,strlen(a.c_str())).c_str())));
+		}
 		break;
 	case 2:
-		//check for menu, help, or exit
+		if(a=="help")
+		{
+			if(game == 1)
+				instructions.open("NonogramRules.txt");
+			else if(game == 2)
+				instructions.open("RulloRules.txt");
+			while(instructions.good())
+			{
+				cout << instructions.getline << endl;
+			};
+			instructions.close;
+		}
+		else if(a == "menu")
+		{
+			userMenu();
+		}
+		else if(a == "exit")
+		{
+			playing=FALSE;
+		}
 		break;
 	default:
 		//recurse into this function after asking for a re-entry of user choice
