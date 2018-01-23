@@ -11,3 +11,7 @@ I want to make an exit function that can be called at any time rather than just 
 Sunday
 7 PM
 I had nothing better to do, so I looked up the rules of Rullo and put them in out userMenu in case the user needs instructions like I did
+
+Monday
+11 pm
+After class today, our team decided on a quick little idea, one that would cost almost nothing and would make printing out instructions for the user much simpler: store the instructions in seperate text files, rather than a bunch of cout commands inside the program itself. So I typed those up, will implement later
