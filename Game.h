@@ -10,7 +10,7 @@ class Game
 public:
 	virtual Game() = 0;									// Default constructor creates blank game board
 	virtual Game(string) = 0;							// Constructor to load file
-	virtual int getNumRows() const = 0					// Getter for number of rows
+	virtual int getNumRows() const = 0;					// Getter for number of rows
 	virtual int getNumCols() const = 0;					// Getter for number of columns
 	virtual T getSolution(int, int) const = 0;			// Get solution from point (row, column)
 	virtual T getBoard(int, int) const = 0;				// Get current board from point (row, column)
