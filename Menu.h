@@ -6,6 +6,8 @@
 #include <string>
 #include <cstring>
 #include <cctype>
+#include "Game.h"
+#include "Picross.h"
 using namespace std;
 
 class Menu	//menu class for user traversal
