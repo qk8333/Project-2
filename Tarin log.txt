@@ -15,3 +15,7 @@ I had nothing better to do, so I looked up the rules of Rullo and put them in ou
 Monday
 11 pm
 After class today, our team decided on a quick little idea, one that would cost almost nothing and would make printing out instructions for the user much simpler: store the instructions in seperate text files, rather than a bunch of cout commands inside the program itself. So I typed those up, will implement later
+
+Wednesday
+12:30 PM
+Wrote some pseudocode for the main menu. I want to get this thing done but for that I need to storyboard it to check for user functionality before code functionality
