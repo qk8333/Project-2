@@ -30,3 +30,28 @@ int main(){
  	}
 	return 0;
 }
+
+
+
+/*
+Tarin is brainstorming down here
+while menu.isPlaying()
+	if start menu
+		welcome to our game!
+		please select a puzzle
+		
+	if game selected
+		would you like to load a game?
+		load hte user's game into memory
+		
+	if game being played
+		print the puzzle out		
+	
+	input << cin
+	
+	if input is exit, exit
+	if input is a valid move AND game being played, push move to program
+	if input is help, print instructions
+	if input is a menu selection AND valid menu is up, update flags
+
+*/
