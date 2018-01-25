@@ -19,3 +19,5 @@ After class today, our team decided on a quick little idea, one that would cost 
 Wednesday
 12:30 PM
 Wrote some pseudocode for the main menu. I want to get this thing done but for that I need to storyboard it to check for user functionality before code functionality
+11:30 PM
+Wrote a little more refined pseudocode
