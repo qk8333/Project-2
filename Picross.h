@@ -1,32 +1,33 @@
 #ifndef PICROSS_H
 #define PICROSS_H 1
-#include <string>
-#include "Game.h"
+
+#include<fstream>
+#include<iostream>
+#include<string>
 using namespace std;
 
-class Picross : public Game<bool>
+#include "Game.h"
+
+class Picross : public Game
 {
 public:
-	Picross() : numRows(0), numCols(0), solution(nullptr), board(nullptr), rowKey(nullptr), colKey(nullptr) {}
+	Picross() : Game() {}
 	Picross(string);
-	int getNumRows() const {return numRows;}
-	int getNumCols() const {return numCols;}
-	bool getSolution(int, int) const;
-	bool getBoard(int, int) const;
-	int getRowKey(int, int) const;
-	int getColKey(int, int) const;
-	int getRowKeyNum() const {return ((numRows % 2 == 1) ? (numRows + 1) / 2 : numRows / 2);}
-	int getColKeyNum() const {return ((numCols % 2 == 1) ? (numCols + 1) / 2 : numCols / 2);}
-	void move(int, int);
-	bool isWin() const;
-	void createGame(bool**, int, int, bool** locked = nullptr);
-	~Picross();
+	Picross(Space**, int, int);
+	virtual int getNumRows() const { return Game::getNumRows(); }
+	virtual int getNumCols() const { return Game::getNumCols(); }
+	virtual int getRowKeyWidth() const { return ((numCols % 2 == 1) ? (numCols + 1) / 2 : numCols / 2); }
+	virtual int getColKeyHeight() const { return ((numRows % 2 == 1) ? (numRows + 1) / 2 : numRows / 2); }
+	virtual int getRowKey(int row, int col) const { return Game::getRowKey(row, col); }
+	virtual int getColKey(int row, int col) const { return Game::getColKey(row, col); }
+	virtual Space * getSolution(int row, int col) const { return Game::getSolution(row, col); }
+	virtual Space * getBoard(int row, int col) const { return Game::getBoard(row, col); }
+	virtual bool isWin() const;
+	virtual void move(int row, int col);
+	virtual void createGame(Space**, int, int);
+	virtual void loadGame(string);
+	virtual ~Picross() { Game::~Game(); }
 private:
-	int numRows, numCols;
-	bool** solution;
-	int** board;
-	int** rowKey;
-	int** colKey;
 	void createKeys();
 };
 
@@ -34,18 +35,23 @@ Picross::Picross(string filename)
 {
 	ifstream file;
 	file.open(filename);
-	if (!file.good()) Picross();
+	if (!file.good()) numRows = 0, numCols = 0, solution = nullptr, board = nullptr, rowKey = nullptr, colKey = nullptr;
 	else
 	{
 		file >> numRows;
-		file >> numColumns;
-		solution = new bool*[numRows];
-		for (int row = 0; row < numRows; row++)
+		file >> numCols;
+		board = new Space*[getNumRows()];
+		solution = new Space*[getNumRows()];
+		for (int row = 0; row < getNumRows(); row++)
 		{
-			solution[row] = new bool[numColumns];
-			for (int column = 0; column < numColumns; column++)
+			board[row] = new Space[getNumCols()];
+			solution[row] = new Space[getNumCols()];
+			for (int col = 0; col < getNumCols(); col++)
 			{
-				solution[row][column] = false;
+				board[row][col].integer = 0;
+				board[row][col].boolean = false;
+				solution[row][col].integer = 0;
+				solution[row][col].boolean = false;
 			}
 		}
 		int row, col;
@@ -53,117 +59,136 @@ Picross::Picross(string filename)
 		{
 			file >> row;
 			file >> col;
-			solution[row - 1][col - 1] = true;
+			solution[row][col].boolean = true;
 		}
-		file.close();
 		createKeys();
 	}
+	file.close();
 }
 
-bool Picross::getSolution(int r, int c) const
+Picross::Picross(Space **sol, int row, int col) : Game(sol, row, col)
 {
-	if (r < 0 || r >= numRows || c < 0 || c >= numCols) return false;
-	else return solution[r][c];
-}
-
-bool Picross::getBoard(int r, int c) const
-{
-	if (r < 0 || r >= numRows || c < 0 || c >= numCols) return false;
-	else return board[r][c];
-}
-
-int Picross::getRowKey(int r, int c) const
-{
-	if (r < 0 || r >= getRowKeyNum() || c < 0 || c >= numCols) return -1;
-	else return board[r][c];
-}
-
-int Picross::getColKey(int r, int c) const
-{
-	if (r < 0 || r >= numRows || c < 0 || c >= getColKeyNum()) return -1;
-	else return board[r][c];
-}
-
-void Picross::move(int r, int c)
-{
-	if (r < 0 || r >= numRows || c < 0 || c >= numCols) return;
-	else board[r][c] = !board[r][c];
+	board = new Space*[getNumRows()];
+	for (int i = 0; i < getNumRows(); i++)
+	{
+		board[i] = new Space[getNumCols()];
+		for (int j = 0; j < getNumCols(); j++)
+		{
+			board[i][j].integer = 0;
+			board[i][j].boolean = false;
+		}
+	}
+	createKeys();
 }
 
 bool Picross::isWin() const
 {
-	for (int i = 0; i < numRows; i++)
+	for (int row = 0; row < getNumRows(); row++)
 	{
-		for (int j = 0; j < numCols; j++)
+		for (int col = 0; col < getNumCols(); col++)
 		{
-			if (board[i][j] == solution[i][j]);
-			else return false;
+			if (board[row][col].boolean != solution[row][col].boolean) return false; else;
 		}
 	}
 	return true;
 }
 
-void Picross::createGame(bool** sol, int r, int c, bool** locked = nullptr) : solution(sol), numRows(r), numCols(c)
+void Picross::move(int row, int col)
 {
-	board = new bool*[getNumRows()];
+	if (row < 0 || row >= getNumRows() || col < 0 || col >= getNumCols()) return;
+	else board[row][col].boolean = !board[row][col].boolean;
+}
+
+void Picross::createGame(Space** sol, int row, int col)
+{
+	for (int i = 0; i < numRows; i++)
+	{
+		delete[] rowKey[i];
+		delete[] solution[i];
+		delete[] board[i];
+	}
+	for (int i = 0; i < getColKeyHeight(); i++) delete[] colKey[i];
+	solution = sol, numRows = row, numCols = col;
+	board = new Space*[getNumRows()];
 	for (int i = 0; i < getNumRows(); i++)
 	{
-		board[i] = new bool[getNumCols()];
-		for (int j = 0; j < getNumCols(); j++) board[i][j] = false;
+		board[i] = new Space[getNumCols()];
+		for (int j = 0; j < getNumCols(); j++)
+		{
+			board[i][j].integer = 0;
+			board[i][j].boolean = false;
+		}
 	}
 	createKeys();
 }
 
-Picross::~Picross()
+void Picross::loadGame(string filename)
 {
-	for (int i = 0; i < numRows; i++)
+	ifstream file;
+	file.open(filename);
+	if (!file.good()) return;
+	else
 	{
-		delete[] solution[i];
-		delete[] rowKey[i];
-		delete[] board[i];
+		file >> numRows;
+		file >> numCols;
+		board = new Space*[getNumRows()];
+		solution = new Space*[getNumRows()];
+		for (int row = 0; row < getNumRows(); row++)
+		{
+			board[row] = new Space[getNumCols()];
+			solution[row] = new Space[getNumCols()];
+			for (int col = 0; col < getNumCols(); col++)
+			{
+				board[row][col].integer = 0;
+				board[row][col].boolean = false;
+				solution[row][col].integer = 0;
+				solution[row][col].boolean = false;
+			}
+		}
+		int row, col;
+		while (!file.eof())
+		{
+			file >> row;
+			file >> col;
+			solution[row][col].boolean = true;
+		}
+		createKeys();
+		file.close();
 	}
-	for (int i = 0; i < getColKeyNum(); i++) delete[] colKey[i];
 }
 
 void Picross::createKeys()
 {
-	int** rowKey = new int*[numRows];
-	for (int i = 0; i < numRows; i++)
+	rowKey = new int*[getNumRows()];
+	for (int i = 0; i < getNumRows(); i++)
 	{
-		rowKey[i] = new int[getRowKeyNum()];
-		for (int j = 0; j < getRowKeyNum(); j++)
+		rowKey[i] = new int[getRowKeyWidth()];
+		for (int j = 0; j < getRowKeyWidth(); j++) rowKey[i][j] = 0;
+	}
+	colKey = new int*[getColKeyHeight()];
+	for (int i = 0; i < getColKeyHeight(); i++)
+	{
+		colKey[i] = new int[getNumCols()];
+		for (int j = 0; j < getNumCols(); j++) colKey[i][j] = 0;
+	}
+	for (int i = getNumRows() - 1; i >= 0; i--)
+	{
+		int temp = getRowKeyWidth() - 1;
+		for (int j = getNumCols() - 1; j >= 0; j--)
 		{
-			rowKey[i][j] = 0;
+			if (!solution[i][j].boolean && rowKey[i][temp] > 0) temp--;
+			else if (!solution[i][j].boolean);
+			else rowKey[i][temp]++;
 		}
 	}
-	int** colKey = new int*[getColKeyNum()];
-	for (int i = 0; i < getColKeyNum(); i++)
+	for (int i = getNumCols() - 1; i >= 0; i--)
 	{
-		colKey[i] = new int[numCols];
-		for (int j = 0; j < numCols; j++)
+		int temp = getColKeyHeight() - 1;
+		for (int j = getNumRows() - 1; j >= 0; j--)
 		{
-			colKey[i][j] = 0;
-		}
-	}
-	for (int i = numRows - 1; i >= 0; i--)
-	{
-		int digit = getRowKeyNum() - 1;
-		for (int j = numCols - 1; j >= 0; j--)
-		{
-			if (!solution[i][j] && rowKey[i][digit] > 0) digit--;
-			else if (!solution[i][j]); // skip
-			else rowKey[i][digit]++;
-		}
-	}
-
-	for (int i = numCols - 1; i >= 0; i--)
-	{
-		int digit = getColKeyNum() - 1;
-		for (int j = numRows - 1; j >= 0; j--)
-		{
-			if (!solution[j][i] && colKey[digit][i] > 0) digit--;
-			else if (!solution[j][i]); // skip
-			else colKey[digit][i]++;
+			if (!solution[j][i].boolean && colKey[temp][i] > 0) temp--;
+			else if (!solution[j][i].boolean);
+			else colKey[temp][i]++;
 		}
 	}
 }
