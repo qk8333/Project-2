@@ -2,8 +2,12 @@
 #define GAME_H 1
 
 #include<fstream>
+#include<iostream>
 #include<string>
 using namespace std;
+
+#include<cstdlib>
+#include<ctime>
 
 // Space struct
 // Object to hold an integer and a boolean value corresponding with a row or column
@@ -37,18 +41,66 @@ public:
 	virtual void move(int, int, int) = 0;                   // Modifies the appropriate value when a certain space is invoked
 	virtual void createGame(Space**, int, int) = 0;		// Overwrites current game with game of same type (resets board)
 	virtual void loadGame(string) = 0;                      // Load game from a .txt file (returns blank game if file DNE)
+	virtual void saveGame(string) = 0;			// Save game to a .txt file
 	virtual ~Game() = 0;                                    // Destructor
 protected:
 	int numRows, numCols, **rowKey, **colKey;
 	Space **solution, **board;
+	virtual void generateKeys() = 0;
 };
 
 
-// Base virtual functions to be inherited regardless of game type
+// Base virtual functions to be inherited regardless of game type (may be overwritten depending on game)
 
 Game::Game() : numRows(0), numCols(0), rowKey(nullptr), colKey(nullptr), solution(nullptr), board(nullptr) {}
 
-Game::Game(Space **sol, int row, int col) : numRows(row), numCols(col), solution(sol) {}
+Game::Game(string filename)
+{
+	ifstream file;
+	file.open(filename);
+	if (!file.good()) numRows = 0, numCols = 0, solution = nullptr, board = nullptr, rowKey = nullptr, colKey = nullptr;
+	else
+	{
+		file >> numRows;
+		file >> numCols;
+		board = new Space*[getNumRows()];
+		solution = new Space*[getNumRows()];
+		for (int row = 0; row < getNumRows(); row++)
+		{
+			board[row] = new Space[getNumCols()];
+			solution[row] = new Space[getNumCols()];
+			for (int col = 0; col < getNumCols(); col++)
+			{
+				board[row][col].integer = (rand() % 10) + 1;
+				board[row][col].boolean = false;
+				solution[row][col].integer = board[row][col].integer;
+				solution[row][col].boolean = false;
+			}
+		}
+		int row, col;
+		while (!file.eof())
+		{
+			file >> row;
+			file >> col;
+			solution[row][col].boolean = true;
+		}
+	}
+	file.close();
+}
+
+Game::Game(Space **sol, int row, int col) : numRows(row), numCols(col), solution(sol)
+{
+	board = new Space*[getNumRows()];
+	for (int i = 0; i < getNumRows(); i++)
+	{
+		board[i] = new Space[getNumCols()];
+		for (int j = 0; j < getNumCols(); j++)
+		{
+			board[i][j].integer = solution[i][j].integer;
+			board[i][j].boolean = false;
+		}
+	}
+}
 
 int Game::getNumRows() const { return numRows; }
 
@@ -62,6 +114,99 @@ Space * Game::getSolution(int row, int col) const { return (row >= getNumRows() 
 
 Space * Game::getBoard(int row, int col) const { return (row >= getNumRows() || row < 0 || col >= getNumCols() || col < 0) ? nullptr : &board[row][col]; }
 
+bool Game::isWin() const
+{
+	for (int row = 0; row < getNumRows(); row++)
+	{
+		for (int col = 0; col < getNumCols(); col++)
+		{
+			if (board[row][col].boolean != solution[row][col].boolean) return false; else;
+		}
+	}
+	return true;
+}
+
+void Game::move(int row, int col, int val = 0)
+{
+	if (row < 0 || row >= getNumRows() || col < 0 || col >= getNumCols()) return;
+	else board[row][col].boolean = !board[row][col].boolean;
+}
+
+void Game::createGame(Space **sol, int row, int col)
+{
+	for (int i = 0; i < numRows; i++)
+	{
+		delete[] rowKey[i];
+		delete[] solution[i];
+		delete[] board[i];
+	}
+	for (int i = 0; i < getColKeyHeight(); i++) delete[] colKey[i];
+	solution = sol, numRows = row, numCols = col;
+	board = new Space*[getNumRows()];
+	for (int i = 0; i < getNumRows(); i++)
+	{
+		board[i] = new Space[getNumCols()];
+		for (int j = 0; j < getNumCols(); j++)
+		{
+			board[i][j].integer = solution[i][j].integer;
+			board[i][j].boolean = false;
+		}
+	}
+	rowKey = nullptr, colKey = nullptr;
+}
+
+void Game::loadGame(string filename)
+{
+	ifstream file;
+	file.open(filename);
+	if (!file.good()) return;
+	else
+	{
+		file >> numRows;
+		file >> numCols;
+		board = new Space*[getNumRows()];
+		solution = new Space*[getNumRows()];
+		for (int row = 0; row < getNumRows(); row++)
+		{
+			board[row] = new Space[getNumCols()];
+			solution[row] = new Space[getNumCols()];
+			for (int col = 0; col < getNumCols(); col++)
+			{
+				board[row][col].integer = (rand() % 10) + 1;
+				board[row][col].boolean = false;
+				solution[row][col].integer = board[row][col].integer;
+				solution[row][col].boolean = false;
+			}
+		}
+		int row, col;
+		while (!file.eof())
+		{
+			file >> row;
+			file >> col;
+			solution[row][col].boolean = true;
+		}
+		file.close();
+	}
+}
+
+void Game::saveGame(string filename)
+{
+	ifstream exists;
+	exists.open(filename);
+	if (exists.good()) return; else exists.close();
+	ofstream file;
+	file.open(filename);
+	file << getNumRows() << " " << getNumCols() << endl;
+	for (int i = 0; i < getNumRows(); i++)
+	{
+		for (int j = 0; j < getNumCols(); j ++)
+		{
+			if (solution[i][j].boolean) file << i << " " << j << endl; else;
+		}
+	}
+	file.close();
+}
+
 Game::~Game()
 {
 	for (int i = 0; i < numRows; i++)
@@ -74,4 +219,3 @@ Game::~Game()
 }
 
 #endif
-
